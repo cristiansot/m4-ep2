@@ -5,20 +5,21 @@ const ServiceList = ({ onServiceSelect }) => {
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  //Simulación de API Rest
+  // Simulación de API
   useEffect(() => {
     const fetchServices = async () => {
       try {
         setLoading(true);
-        const response = await fetch("/api/services.json"); 
+        const response = await fetch("../assets/servicios.json");
         if (!response.ok) {
           throw new Error("Error al cargar los servicios");
         }
         const data = await response.json();
-        setServices(data);
+        
+        setServices(data.servicios);
       } catch (error) {
         console.error("Error al cargar los servicios:", error);
-        setServices(["Servicio de respaldo 1", "Servicio de respaldo 2"]); 
+        setServices(["Urgencias", "Consultas Médicas", "Hospitalización", "Toma de Muestras"]); 
       } finally {
         setLoading(false);
       }
