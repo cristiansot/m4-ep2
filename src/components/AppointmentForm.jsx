@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import * as Yup from "yup";
 import '../assets/css/form.css';
 
-const AppointmentForm = ({ doctors, onAppointmentSubmit }) => {
+const AppointmentForm = ({ doctors, specialties, onAppointmentSubmit }) => {
   const patientNameRef = useRef(null);
 
   const validationSchema = Yup.object({
@@ -94,14 +94,14 @@ const AppointmentForm = ({ doctors, onAppointmentSubmit }) => {
 };
 
 AppointmentForm.propTypes = {
-  specialties: PropTypes.arrayOf(PropTypes.string).isRequired,
+  specialties: PropTypes.arrayOf(PropTypes.string).isRequired, 
   doctors: PropTypes.arrayOf(
     PropTypes.shape({
-      nombre: PropTypes.string.isRequired,
+      nombre: PropTypes.string.isRequired, 
       especialidad: PropTypes.string.isRequired,
     })
-  ).isRequired,
-  onAppointmentSubmit: PropTypes.func.isRequired,
+  ).isRequired, 
+  onAppointmentSubmit: PropTypes.func.isRequired, 
 };
 
 export default AppointmentForm;

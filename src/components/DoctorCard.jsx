@@ -38,10 +38,10 @@ const DoctorCard = ({ doctor }) => {
 
 DoctorCard.propTypes = {
   doctor: PropTypes.shape({
-    nombre: PropTypes.string.isRequired,
-    imagen: PropTypes.string.isRequired,
-    especialidad: PropTypes.string.isRequired,
-    años_experiencia: PropTypes.number.isRequired,
+    nombre: PropTypes.string.isRequired, 
+    imagen: PropTypes.string.isRequired, 
+    especialidad: PropTypes.string.isRequired, 
+    años_experiencia: PropTypes.number.isRequired, 
   }).isRequired,
 };
 

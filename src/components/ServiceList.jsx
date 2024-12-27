@@ -45,7 +45,8 @@ const ServiceList = ({ onServiceSelect }) => {
 };
 
 ServiceList.propTypes = {
-  onServiceSelect: PropTypes.func.isRequired,
+  onServiceSelect: PropTypes.func.isRequired, 
+  services: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default ServiceList;
