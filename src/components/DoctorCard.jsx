@@ -7,7 +7,7 @@ const DoctorCard = ({ doctor }) => {
   useEffect(() => {
     const fetchImage = () => {
       if (doctor.imagen) {
-        setImageUrl(doctor.imagen);
+        setImageUrl(doctor.imagen); 
       } else {
         console.warn(`No se encontró imagen para el doctor: ${doctor.nombre}`);
         setImageUrl("/default-image.jpg"); 

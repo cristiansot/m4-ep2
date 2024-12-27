@@ -1,38 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import DoctorCard from './components/DoctorCard';
 import ServiceList from './components/ServiceList';
 import AppointmentForm from './components/AppointmentForm';
+import { AppProvider, useAppContext } from './components/AppContext';
 import teamData from './assets/equipo.json';
 
 const App = () => {
-  const [resolvedTeamData, setResolvedTeamData] = useState([]);
-  const [medicalServices, setMedicalServices] = useState([]);
-  const [selectedService, setSelectedService] = useState(null);
-  const [appointments, setAppointments] = useState([]);
+  const {
+    resolvedTeamData,
+    setResolvedTeamData,
+    medicalServices,
+    handleServiceSelect,
+    appointments,
+    addAppointment,
+    resolveImagePaths,
+    fetchServices,
+  } = useAppContext();
 
   useEffect(() => {
-    const resolveImagePaths = (data) => {
-      return data.map((doctor) => ({
-        ...doctor,
-        imagen: new URL(`./assets/img/${doctor.imagen.split('/').pop()}`, import.meta.url).href,
-      }));
-    };
-
-    const initialMedicalServices = ["Urgencias", "Consultas Médicas", "Hospitalización", "Toma de Muestras"];
-    setMedicalServices(initialMedicalServices);
-    setResolvedTeamData(resolveImagePaths(teamData));
-  }, []);
-
-  const handleServiceSelect = (service) => {
-    setSelectedService(service);
-  };
-
-  const addAppointment = (newAppointment) => {
-    setAppointments((prevAppointments) => [...prevAppointments, newAppointment]);
-  };
-
-  const specialties = [...new Set(resolvedTeamData.map((doctor) => doctor.especialidad))];
+    fetchServices(); 
+    setResolvedTeamData(resolveImagePaths(teamData)); 
+  }, [fetchServices, resolveImagePaths, setResolvedTeamData]);
 
   return (
     <div className="App">
@@ -44,7 +33,7 @@ const App = () => {
       </div>
 
       <AppointmentForm
-        specialties={specialties}
+        specialties={medicalServices}
         doctors={resolvedTeamData}
         onAppointmentSubmit={addAppointment}
       />
@@ -68,10 +57,14 @@ const App = () => {
           <DoctorCard key={index} doctor={doctor} />
         ))}
       </div>
-
-      
     </div>
   );
 };
 
-export default App;
+const AppWithProvider = () => (
+  <AppProvider>
+    <App />
+  </AppProvider>
+);
+
+export default AppWithProvider;
