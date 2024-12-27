@@ -33,9 +33,9 @@ const ServiceList = ({ onServiceSelect }) => {
   }
 
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-      <h3>Lista de Servicios</h3>
-      <select onChange={(e) => onServiceSelect(e.target.value)}>
+    <> 
+      <h2>Lista de Servicios</h2>
+      <select style={{ alignItems: "center", marginBottom: "20px" }} onChange={(e) => onServiceSelect(e.target.value)}>
         <option value="">Seleccionar un servicio</option>
         {services.map((service, index) => (
           <option key={index} value={service}>
@@ -43,7 +43,7 @@ const ServiceList = ({ onServiceSelect }) => {
           </option>
         ))}
       </select>
-    </div>
+    </>
   );
 };
 
