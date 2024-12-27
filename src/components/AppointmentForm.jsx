@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import PropTypes from "prop-types";
 import * as Yup from "yup";
 import '../assets/css/form.css';
 
 const AppointmentForm = ({ doctors, onAppointmentSubmit }) => {
+  const patientNameRef = useRef(null);
+
   const validationSchema = Yup.object({
     patientName: Yup.string()
       .required("El nombre del paciente es obligatorio")
@@ -14,6 +16,12 @@ const AppointmentForm = ({ doctors, onAppointmentSubmit }) => {
       .required("Debes seleccionar una fecha")
       .min(new Date(), "La fecha no puede ser en el pasado"),
   });
+
+  useEffect(() => {
+    if (patientNameRef.current) {
+      patientNameRef.current.focus();
+    }
+  }, []);
 
   return (
     <div className="formContainer">
@@ -39,6 +47,7 @@ const AppointmentForm = ({ doctors, onAppointmentSubmit }) => {
                 id="patientName"
                 name="patientName"
                 placeholder="Nombre completo"
+                innerRef={patientNameRef} 
               />
               <ErrorMessage
                 name="patientName"
