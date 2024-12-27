@@ -3,8 +3,8 @@ import './App.css';
 import DoctorCard from './components/DoctorCard';
 import ServiceList from './components/ServiceList';
 import AppointmentForm from './components/AppointmentForm';
-import { AppProvider, useAppContext } from './components/AppContext';
 import teamData from './assets/equipo.json';
+import { AppProvider, useAppContext } from './components/AppContext';
 
 const App = () => {
   const {
@@ -15,13 +15,11 @@ const App = () => {
     appointments,
     addAppointment,
     resolveImagePaths,
-    fetchServices,
   } = useAppContext();
 
   useEffect(() => {
-    fetchServices(); 
-    setResolvedTeamData(resolveImagePaths(teamData)); 
-  }, [fetchServices, resolveImagePaths, setResolvedTeamData]);
+    setResolvedTeamData(resolveImagePaths(teamData));
+  }, [resolveImagePaths, setResolvedTeamData]);
 
   return (
     <div className="App">
@@ -52,11 +50,15 @@ const App = () => {
       )}
 
       <h2>Equipo Médico</h2>
-      <div className="doctor-list">
-        {resolvedTeamData.map((doctor, index) => (
-          <DoctorCard key={index} doctor={doctor} />
-        ))}
-      </div>
+      <React.Profiler id="DoctorList" onRender={(id, phase, actualDuration) => {
+        console.log(`Lista de doctores renderizada en ${actualDuration} ms en la fase ${phase}`);
+      }}>
+        <div className="doctor-list">
+          {resolvedTeamData.map((doctor, index) => (
+            <DoctorCard key={index} doctor={doctor} />
+          ))}
+        </div>
+      </React.Profiler>
     </div>
   );
 };

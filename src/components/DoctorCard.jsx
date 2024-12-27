@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import withModal from '../hoc/withModal';
 import Modal from './Modal';
@@ -11,20 +11,26 @@ const DoctorCard = ({ doctor, isModalOpen, openModal, closeModal }) => {
   };
 
   return (
-    <div className="doctor-card">
-      <img
-        src={doctor.imagen}
-        alt={`Foto de ${doctor.nombre}`}
-        className="doctor-image"
-        style={{ height: 400, borderRadius: 30 }}
-      />
-      <div className="doctor-info">
-        <h2>{doctor.nombre}</h2>
-        <button onClick={openModal} style={{ marginTop: -10 }}>Ver detalles</button>
-      </div>
+    <React.Profiler id="DoctorCard" onRender={(id, phase, actualDuration) => {
+      console.log(`Componente ${id} renderizado en ${actualDuration} ms en la fase ${phase}`);
+    }}>
+      <div className="doctor-card">
+        <img
+          src={doctor.imagen}
+          alt={`Foto de ${doctor.nombre}`}
+          className="doctor-image"
+          style={{ height: 400, borderRadius: 30 }}
+        />
+        <div className="doctor-info">
+          <h2>{doctor.nombre}</h2>
+          <button onClick={openModal} style={{ marginTop: 10, padding: '10px 20px', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: 5 }}>
+            Ver detalles
+          </button>
+        </div>
 
-      <Modal isOpen={isModalOpen} content={modalContent} onClose={closeModal} />
-    </div>
+        <Modal isOpen={isModalOpen} content={modalContent} onClose={closeModal} />
+      </div>
+    </React.Profiler>
   );
 };
 
@@ -41,3 +47,8 @@ DoctorCard.propTypes = {
 };
 
 export default withModal(DoctorCard);
+
+
+
+
+
